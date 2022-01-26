@@ -1,7 +1,8 @@
 const User = require('../../Models/User')
 const crypto = require("crypto");
 const jwt = require('jsonwebtoken');
-const sendEmail = require('../../helpers/sendMail')
+const sendEmail = require('../../helpers/sendMail');
+const { Shortner } = require('../Private/Shortner');
 
 exports.Register = async(req,res,next) => {
     const {username,email,password} = req.body;
@@ -52,7 +53,7 @@ exports.Register = async(req,res,next) => {
         try{
             await sendEmail({
                 to : email,
-                subject : process.env.EMAIL_SUBJECT,
+                subject : "URL Shortner",
                 text : message
             })
             return res.status(200).json({success:true,message : "Email Sent to activate your account! Make sure to check your spam mail and mark not as spam."})
